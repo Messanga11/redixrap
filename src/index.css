@@ -1,0 +1,148 @@
+html {
+  -webkit-locale: "es";
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: sans-serif;
+  -webkit-text-size-adjust: 100%;
+  font-size: 9.5px;
+  -webkit-tap-highlight-color: transparent;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+body {
+  margin: 0;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  color: #666;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #ffffff;
+  background-image: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.global-wrapper {
+  max-width: 1080px;
+  margin: auto;
+  overflow-x: hidden;
+}
+
+.global-wrapper * {
+  font-family: inherit !important;
+  -webkit-transition: all 0.2s !important;
+  transition: all 0.2s !important;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.global-wrapper h1,
+.global-wrapper h2,
+.global-wrapper h3,
+.global-wrapper h4,
+.global-wrapper h5,
+.global-wrapper h6 {
+  font-family: inherit;
+}
+
+.global-wrapper iframe {
+  border: none;
+}
+
+.arrow-active {
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.desktop-view-screen {
+  display: none !important;
+}
+
+.desktop-view-screen-flex {
+  display: none !important;
+}
+
+.hide {
+  display: none !important;
+}
+
+.loading-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+}
+
+#diamond-items {
+  display: block;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: calc(100vh - 30px);
+  max-height: 100vh;
+  padding: 5px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+@-webkit-keyframes blurLoading {
+  0% {
+    -webkit-filter: blur(20px);
+            filter: blur(20px);
+  }
+  100% {
+    -webkit-filter: blur(0);
+            filter: blur(0);
+  }
+}
+
+@keyframes blurLoading {
+  0% {
+    -webkit-filter: blur(20px);
+            filter: blur(20px);
+  }
+  100% {
+    -webkit-filter: blur(0);
+            filter: blur(0);
+  }
+}
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .desktop-view-screen {
+    display: block !important;
+  }
+  .desktop-view-screen-flex {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+  }
+  .mobile-view-screen {
+    display: none !important;
+  }
+}
+/*# sourceMappingURL=index.css.map */

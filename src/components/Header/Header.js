@@ -4,8 +4,9 @@ import HeaderRight from "./HeaderRight";
 import Button from "../Button/Button";
 import { KeyboardArrowDown } from "@material-ui/icons";
 import Filter from "../Filter/Filter";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import SortDropdown from "../SortDropdown/SortDropdown";
+import { useRef } from "react";
 
 const Header = ({
   totalDiamonds,
@@ -21,6 +22,9 @@ const Header = ({
   const [showSorters, setShowSorters] = useState(false);
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const [sliderIndex, setSliderIndex] = useState(0);
+  const [showSearch, setShowSearch] = useState(false);
+
+  const searchInputRef = useRef(null);
 
   const hideShowFilter = () => {
     setHideFilter((state) => !state);
@@ -32,6 +36,33 @@ const Header = ({
     setSliderIndex(index);
     setHideFilter(false);
   };
+
+  const debounceFunction = (func, delay) => {
+    let timer;
+    return function () {
+      let self = this;
+      let args = arguments;
+      setFilterForm(state => ({
+        ...state,
+        keyword: args[0]
+      }))
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(self, args);
+      }, delay);
+    };
+  };
+
+  // eslint-disable-next-line
+  const debounceSearch = useCallback(
+    debounceFunction(
+      (currentKeyword) => {
+        getDiamondsData()
+      },
+      1000
+    ),
+    []
+  );
 
   return (
     <HeaderStyled>
@@ -171,6 +202,25 @@ const Header = ({
           <div className="left">
             {totalDiamonds || 0} Diamante{totalDiamonds !== 1 && "s"}
           </div>
+          {!showSearch && (
+            <div
+            className="mobile-search-btn"
+            onClick={() => {
+              searchInputRef.current?.focus();
+              setShowSearch(!showSearch)
+            }}
+          >
+              <svg
+                width={20}
+                height={20}
+                focusable="false"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+              </svg>
+            </div>
+          )}
           <button className="sort-btn" onClick={() => setShowSorters(true)}>
             Ordenar Por <KeyboardArrowDown className="icon" />
           </button>
@@ -179,7 +229,34 @@ const Header = ({
       <HeaderLeft className="desktop-view-screen">
         Mostrando {totalDiamonds || 0} Diamante{totalDiamonds !== 1 && "s"}
       </HeaderLeft>
+      {/* Search Input */}
+      <div className={`search-bar${showSearch ? " search-bar--active" : ""}`}>
+        <input
+          ref={searchInputRef} type="search"
+          value={filterForm.keyword}
+          onChange={(e) => debounceSearch(e.target.value)}
+          onBlur={() => setShowSearch(false)} />
+      </div>
       <HeaderRight className="desktop-view-screen-flex">
+      {!showSearch && (
+        <Button
+          Icon={() => (
+            <svg
+              width={20}
+              height={20}
+              focusable="false"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+            </svg>
+          )}
+          onClick={() => {
+            searchInputRef.current?.focus();
+            setShowSearch(!showSearch)
+          }}
+        />
+      )}
         <Button
           Icon={
             inTable

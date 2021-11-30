@@ -52,7 +52,7 @@ const PriceRange = ({
         max={maxValue || 100}
         value={leftValue}
         onChange={changeLeft}
-        step={values ? Math.fround(100 / values.length) : isSize ? 0.1 : 1}
+        step={values ? Math.fround(100 / values.length) : isSize ? 0.5 : 1}
         onMouseUp={getDiamondsData}
         disabled={disabled}
       />
@@ -63,7 +63,7 @@ const PriceRange = ({
         max={maxValue || 100}
         value={rightValue}
         onChange={changeRight}
-        step={values ? Math.fround(100 / values.length) : isSize ? 0.1 : 1}
+        step={values ? Math.fround(100 / values.length) : isSize ? 0.5 : 1}
         onMouseUp={getDiamondsData}
         disabled={disabled}
       />

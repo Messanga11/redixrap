@@ -122,7 +122,8 @@ const Home = ({
     }
   };
 
-  const getMoreDataOnScrollToBottom = (diamondsEl) => {
+  const getMoreDataOnScrollToBottom = (e) => {
+    const diamondsEl = e.target;
     if (
       diamondsEl.scrollTop >=
       diamondsEl.scrollHeight - diamondsEl.clientHeight

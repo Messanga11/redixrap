@@ -39,7 +39,7 @@ const Filter = ({
 
   const [localForm, setLocalForm] = useState({
     sizeFrom: 0,
-    sizeTo: 1.5,
+    sizeTo: 20,
     priceFrom: 0,
     priceTo: 4243437
   })
@@ -165,31 +165,17 @@ const Filter = ({
   ) => {
     if (e.target.value !== "") {
       if(leftHand.includes("size")) {
-        if(isFromSizeInput) {
-          const value = Math.min(
-            (isNaN(e.target.value) || e.target.value > e.target.max || (isNaN(e.target.value) || e.target.value < e.target.min ) ) ? 0 : e.target.value,
-              !lettersIndex
-                ? filterForm[rightHand]
-                : filterLettersNum[rightHand]
-          );
-          setForm(leftHand, value, lettersIndex, isColor);
-          setLocalForm({
-            ...localForm,
-            sizeFrom: value
-          });
-        } else {
-          const value = Math.min(
-            (isNaN(e.target.value) || e.target.value > e.target.max || (isNaN(e.target.value) || e.target.value < e.target.min ) ) ? 0 : e.target.value,
-              !lettersIndex
-                ? filterForm[rightHand] - 0.1
-                : filterLettersNum[rightHand]
-          );
-          setForm(leftHand, value, lettersIndex, isColor);
-          setLocalForm({
-            ...localForm,
-            sizeFrom: value
-          });
-        }
+        const value = Math.min(
+          (isNaN(e.target.value) || parseInt(e.target.value) > parseInt(e.target.max) || parseInt(e.target.value) < parseInt(e.target.min)) ? 0 : e.target.value,
+            !lettersIndex
+              ? filterForm[rightHand] - 1
+              : filterLettersNum[rightHand]
+        );
+        setForm(leftHand, value, lettersIndex, isColor);
+        setLocalForm({
+          ...localForm,
+          sizeFrom: value
+        });
       } else if(leftHand.includes("price")) {
         if(isFromSizeInput) {
           const value = Math.min(
@@ -205,7 +191,7 @@ const Filter = ({
           });
         } else {
           const value = Math.min(
-            (isNaN(e.target.value) || parseInt(e.target.value) > parseInt(e.target.max) || parseInt(e.target.value) < parseInt(e.target.min)) ? 0 : e.target.value,
+            (isNaN(e.target.value) || parseFloat(e.target.value) > parseFloat(e.target.max) || parseFloat(e.target.value) < parseFloat(e.target.min)) ? 0 : parseFloat(e.target.value),
               !lettersIndex
                 ? filterForm[rightHand] - 10
                 : filterLettersNum[rightHand]
@@ -217,34 +203,16 @@ const Filter = ({
           });
         }
       } else {
-        if (
-          parseInt((isNaN(e.target.value) || e.target.value > e.target.max || (isNaN(e.target.value) || e.target.value < e.target.min ) ) ? 0 : e.target.value) !==
-          parseInt(
-            !lettersIndex ? filterForm[rightHand] : filterLettersNum[rightHand]
-          )
-        ) {
           const value =
             Math.min(
-              parseInt((isNaN(e.target.value) || e.target.value > e.target.max || (isNaN(e.target.value) || e.target.value < e.target.min ) ) ? 0 : e.target.value),
+              (isNaN(e.target.value) || parseInt(e.target.value) > parseInt(e.target.max) || (isNaN(e.target.value) || parseInt(e.target.value) < parseInt(e.target.min)) ? 0 : e.target.value),
               parseInt(
                 !lettersIndex
                   ? filterForm[rightHand]
-                  : filterLettersNum[rightHand]
-              )
-            ) || 0;
-          setForm(leftHand, value, lettersIndex, isColor);
-        } else {
-          const value =
-            Math.min(
-              parseInt((isNaN(e.target.value) || e.target.value > e.target.max || (isNaN(e.target.value) || e.target.value < e.target.min ) ) ? 0 : e.target.value),
-              parseInt(
-                !lettersIndex
-                  ? filterForm[rightHand]
-                  : filterLettersNum[rightHand]
+                  : filterLettersNum[rightHand] - Math.fround(100 / values[leftHand?.includes("color") ? 1 : leftHand?.includes("clarity") ? 2 : leftHand?.includes("cut") ? 3 : 4].length)
               )
             ) || 0;
           setForm(leftHand, value >= 1 ? value - 1 : 0, lettersIndex, isColor);
-        }
       }
     } else {
       setForm(leftHand, "", lettersIndex, isColor);
@@ -261,31 +229,19 @@ const Filter = ({
   ) => {
     if (e.target.value !== "") {
       if(leftHand.includes("size")) {
-        if(isFromSizeInput) {
-          const value =  Math.max(
-            (isNaN(e.target.value) || e.target.value > e.target.max || (isNaN(e.target.value) || e.target.value < e.target.min ) ) ? e.target.max : e.target.value,
-              !lettersIndex ? filterForm[leftHand] : filterLettersNum[leftHand]
-          );
-          setForm(rightHand, value, lettersIndex, isColor);
-          setLocalForm({
-            ...localForm,
-            sizeTo: value
-          });
-        } else {
-          const value =  Math.max(
-            (isNaN(e.target.value) || e.target.value > e.target.max || (isNaN(e.target.value) || e.target.value < e.target.min ) ) ? e.target.max : e.target.value,
-              !lettersIndex ? filterForm[leftHand] + 0.1 : filterLettersNum[leftHand]
-          );
-          setForm(rightHand, value, lettersIndex, isColor);
-          setLocalForm({
-            ...localForm,
-            sizeTo: value
-          });
-        }
+        const value =  Math.max(
+          (isNaN(e.target.value) || parseFloat(e.target.value) > parseFloat(e.target.max) || (isNaN(e.target.value) || parseFloat(e.target.value) < parseFloat(e.target.min)) ? e.target.max : e.target.value),
+            !lettersIndex ? filterForm[leftHand] + 1 : filterLettersNum[leftHand]
+        );
+        setForm(rightHand, value, lettersIndex, isColor);
+        setLocalForm({
+          ...localForm,
+          sizeTo: value
+        });
       } else if(leftHand.includes("price")) {
         if(isFromSizeInput) {
           const value =  Math.max(
-            (isNaN(e.target.value) || parseInt(e.target.value) > parseInt(e.target.max) || parseInt(e.target.value) < parseInt(e.target.min)) ? e.target.max : e.target.value,
+            (isNaN(e.target.value) || parseInt(e.target.value) > parseInt(e.target.max) || (isNaN(e.target.value) || parseInt(e.target.value) < parseInt(e.target.min)) ? e.target.max : e.target.value),
               !lettersIndex ? filterForm[leftHand] : filterLettersNum[leftHand]
           );
           setForm(rightHand, value, lettersIndex, isColor);
@@ -295,7 +251,7 @@ const Filter = ({
           });
         } else {
           const value =  Math.max(
-            (isNaN(e.target.value) || parseInt(e.target.value) > parseInt(e.target.max) || parseInt(e.target.value) < parseInt(e.target.min)) ? e.target.max : e.target.value,
+            (isNaN(e.target.value) || parseInt(e.target.value) > parseInt(e.target.max) || (isNaN(e.target.value) || parseInt(e.target.value) < parseInt(e.target.min)) ? e.target.max : e.target.value),
               !lettersIndex ? filterForm[leftHand] + 10 : filterLettersNum[leftHand]
           );
           setForm(rightHand, value, lettersIndex, isColor);
@@ -305,35 +261,19 @@ const Filter = ({
           });
         }
       } else {
-        if (
-          parseInt((isNaN(e.target.value) || e.target.value > e.target.max || (isNaN(e.target.value) || e.target.value < e.target.min ) ) ? e.target.max : e.target.value) !==
-          parseInt(
-            !lettersIndex ? filterForm[leftHand] : filterLettersNum[leftHand]
-          )
-        ) {
-          const value =
+        const value =
           Math.max(
-                parseInt((isNaN(e.target.value) || e.target.value > e.target.max || (isNaN(e.target.value) || e.target.value < e.target.min ) ) ? e.target.max : e.target.value),
-                parseInt(
-                  !lettersIndex ? filterForm[leftHand] : filterLettersNum[leftHand]
-                )
-              ) || e.target.max;
-          setForm(rightHand, value, lettersIndex, isColor);
-        } else {
-          const value =
-            Math.max(
-              parseInt((isNaN(e.target.value) || e.target.value > e.target.max || (isNaN(e.target.value) || e.target.value < e.target.min ) ) ? e.target.max : e.target.value),
-              parseInt(
-                !lettersIndex ? filterForm[leftHand] : filterLettersNum[leftHand]
-              )
-            ) || e.target.max;
-          setForm(
-            rightHand,
-            value <= e.target.max - 1 ? value + 1 : e.target.max,
-            lettersIndex,
-            isColor
-          );
-        }
+            (isNaN(e.target.value) || parseInt(e.target.value) > parseInt(e.target.max) || (isNaN(e.target.value) || parseInt(e.target.value) < parseInt(e.target.min)) ? e.target.max : e.target.value),
+            parseInt(
+              !lettersIndex ? filterForm[leftHand] : filterLettersNum[leftHand] + Math.fround(100 / values[leftHand?.includes("color") ? 1 : leftHand?.includes("clarity") ? 2 : leftHand?.includes("cut") ? 3 : 4].length)
+            )
+          ) || e.target.max;
+        setForm(
+          rightHand,
+          value,
+          lettersIndex,
+          isColor
+        );
       }
     } else {
       setForm(rightHand, "", lettersIndex, isColor);
@@ -720,22 +660,22 @@ const Filter = ({
           {/* Size */}
           <FilterCard title="Tama&#241;o">
             <PriceRange
-              isSize
               leftValue={filterForm.sizeFrom}
               rightValue={filterForm.sizeTo}
-              maxValue={1.5}
+              maxValue={20}
               minValue={0}
               trackId="sizeTrack"
               changeLeft={(e) => changeLeft(e, "sizeFrom", "sizeTo", false, false, true)}
               changeRight={(e) => changeRight(e, "sizeFrom", "sizeTo", false, false, true)}
               getDiamondsData={getDiamondsData}
+              isSize
             />
             <div className="flex spaced-inputs">
               <div className="input-container">
                 <input
                   type="text"
                   inputMode="decimal"
-                  max={1.5}
+                  max={20}
                   min={0}
                   value={localForm.sizeFrom}
                   onClick={(e) => e.target.select()}
@@ -744,8 +684,14 @@ const Filter = ({
                     sizeFrom: e.target.value
                   }))}
                   onBlur={(e) => {
-                    updateLeft(e, e.target.value, "sizeTrack", 0, 1.5);
+                    updateLeft(e, e.target.value, "sizeTrack", 0, 20);
                     changeLeft(e, "sizeFrom", "sizeTo");
+                  }}
+                  onKeyPress={(e) => {
+                    if(e.key === "Enter") {
+                      updateLeft(e, e.target.value, "sizeTrack", 0, 20);
+                      changeLeft(e, "sizeFrom", "sizeTo");
+                    }
                   }}
                 />
                 <span className="unit">ct.</span>
@@ -754,7 +700,7 @@ const Filter = ({
                 <input
                   type="text"
                   inputMode="decimal"
-                  max={1.5}
+                  max={20}
                   min={0}
                   onClick={(e) => e.target.select()}
                   value={localForm.sizeTo}
@@ -763,8 +709,15 @@ const Filter = ({
                     sizeTo: e.target.value
                   }))}
                   onBlur={(e) => {
-                    updateRight(e, e.target.value, "sizeTrack", 0, 1.5);
+                    updateRight(e, e.target.value, "sizeTrack", 0, 20);
                     changeRight(e, "sizeFrom", "sizeTo");
+                  }}
+                  
+                  onKeyPress={(e) => {
+                    if(e.key === "Enter") {
+                      updateRight(e, e.target.value, "sizeTrack", 0, 20);
+                      changeRight(e, "sizeFrom", "sizeTo");
+                    }
                   }}
                 />
                 <span className="unit">ct.</span>
@@ -807,6 +760,13 @@ const Filter = ({
                     updateLeft(e, e.target.value, "priceTrack", 0, 4243437);
                     changeLeft(e, "priceTotalFrom", "priceTotalTo");
                   }}
+                  
+                  onKeyPress={(e) => {
+                    if(e.key === "Enter") {
+                      updateLeft(e, e.target.value, "priceTrack", 0, 4243437);
+                      changeLeft(e, "priceTotalFrom", "priceTotalTo");
+                    }
+                  }}
                 />
               </div>
               <div className="input-container">
@@ -827,6 +787,12 @@ const Filter = ({
                   onBlur={(e) => {
                     updateRight(e, e.target.value, "priceTrack", 0, 4243437);
                     changeRight(e, "priceTotalFrom", "priceTotalTo");
+                  }}
+                  onKeyPress={(e) => {
+                    if(e.key === "Enter") {
+                      updateRight(e, e.target.value, "priceTrack", 0, 4243437);
+                      changeRight(e, "priceTotalFrom", "priceTotalTo");
+                    }
                   }}
                 />
               </div>

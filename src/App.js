@@ -8,7 +8,7 @@ function App() {
   const initialForm = {
     shapes: [],
     sizeFrom: 0.01,
-    sizeTo: 1.5,
+    sizeTo: 20,
     colors: {
       colorFrom: "M",
       colorTo: "D",

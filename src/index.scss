@@ -48,6 +48,40 @@ body {
   }
 }
 
+.search-bar {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  transition: all 0.2s;
+  opacity: 0;
+  input {
+    -webkit-appearance: none;
+    border: none;
+    padding: 10px 20px;
+    box-shadow: 1px 0 4px #cce;
+    outline: none;
+    width: 50%;
+    min-width: 200px;
+    background-color: #fff;
+    font-size: 18px;
+    border-radius: 5px;
+  }
+}
+
+.search-bar--active {
+  top: 20px;
+  opacity: 1;
+}
+
+.mobile-search-btn {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
 .arrow-active {
   transform: rotate(180deg);
 }
